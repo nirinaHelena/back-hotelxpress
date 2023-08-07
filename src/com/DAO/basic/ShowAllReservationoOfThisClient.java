@@ -1,30 +1,22 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
+import com.ShowClass.ThisPromotion;
 import com.ShowClass.ThisReservation;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowAllReservationOfAnClientThisMonthThisYear {
-    public static List<ThisReservation>
-            showAllReservationOfAnClientThisMonthThisYear(
-                    int idClient, int month, int year
-    ){
+public class ShowAllReservationoOfThisClient {
+    public static List<ThisReservation> showAllReservationOfThisClient(int idClient){
         DataBaseConnection db=new DataBaseConnection();
-        Connection connection= db.createConnection();
+        Connection connection=db.createConnection();
 
-        List<ThisReservation> reservationList= new ArrayList<>();
-
+        List<ThisReservation> reservationList=new ArrayList<>();
         try {
-            String sql="SELECT count(reservation.*) " +
-                    "AS total_of_reservation from reservation\n" +
-                    "where id_user = " +idClient+
-                    "and EXTRACT(month from date_reservation) = "+
-                    month+
-                    "  and EXTRACT(year from date_reservation) = "+
-                    year+";";
+            String sql="select * from reservation inner join client on " +
+                    "client.id_client=reservation.id_user where id_client= "+idClient+";";
             Statement statement=connection.createStatement();
             ResultSet resultSet= statement.executeQuery(sql);
 

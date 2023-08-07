@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisRoom;

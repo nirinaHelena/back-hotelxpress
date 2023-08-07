@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisPromotion;
@@ -20,10 +20,10 @@ public class ShowAllPromotionPerSeason {
         try {
             String sql =" select p.* from promotion as p " +
                     "inner join have_promotion as hp " +
-                    "on hp.id_promotion= p.id inner join hotel as h " +
-                    "on hp.id_hotel= h.id_hotel" +
-                    "where p.start_date <= current_date" +
-                    "and p.end_date>=current_date;";
+                    "on hp.id_promotion= p.id inner join hotel  " +
+                    "on hp.id_hotel= hotel.id_hotel " +
+                    " where p.start_date <= current_date" +
+                    " and p.end_date>=current_date;";
             Statement statement=connection.createStatement();
             ResultSet resultSet= statement.executeQuery(sql);
 

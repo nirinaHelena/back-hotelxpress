@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.medium;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisRoom;
@@ -10,20 +10,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowAllRoomPerPrice {
-    public static List<ThisRoom> showAllRoomPerPrice() {
-        DataBaseConnection db=new DataBaseConnection();
-        Connection connection=db.createConnection();
+public class FreeRoomsTomorrow {
+
+    // TODO: line-3
+    public static List<ThisRoom> freeRoomsTomorrow(){
+        DataBaseConnection db = new DataBaseConnection();
+        Connection connection = db.createConnection();
 
         List<ThisRoom> roomList=new ArrayList<>();
         try {
-            String sql="SELECT room.id, room.room_category," +
-                    " room.room_name, room.price_per_night," +
-                    " room.price_per_hour\n" +
-                    "FROM room\n" +
-                    "ORDER BY room.price_per_night DESC;";
-            Statement statement= connection.createStatement();
-            ResultSet resultSet=statement.executeQuery(sql);
+            String sql = "SELECT r.* FROM room AS r " +
+                    "WHERE r.id NOT IN ( " +
+                    "    SELECT rc.id_room " +
+                    "    FROM reservation_contain AS rc " +
+                    "    JOIN reservation AS res ON rc.id_reservation = res.id " +
+                    "    WHERE res.arrival <= CURRENT_DATE + 1 " +
+                    "    AND res.departure >= CURRENT_DATE + 1 " +
+                    ");";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
 
             while (resultSet.next()){
                 int idRoom= resultSet.getInt("id");
@@ -43,9 +50,12 @@ public class ShowAllRoomPerPrice {
             }
             resultSet.close();
             statement.close();
-        }catch (SQLException e){
+            connection.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return roomList;
     }
 }
+
+

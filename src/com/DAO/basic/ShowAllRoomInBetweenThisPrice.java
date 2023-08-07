@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisRoom;
@@ -20,11 +20,11 @@ public class ShowAllRoomInBetweenThisPrice {
 
         List<ThisRoom> roomList=new ArrayList<>();
         try {
-            String sql="SELECT room.id,room.room_category," +
-                    "room.room_name,room.price_per_night\n" +
-                    "FROM room\n" +
+            String sql="SELECT room.id,room.room_category, " +
+                    "room.room_name,room.price_per_night \n" +
+                    "FROM room \n" +
                     "WHERE room.price_per_night " +
-                    "BETWEEN"+ minValue +"and"+ maxValue+";";
+                    "BETWEEN "+ minValue +" and "+ maxValue+" ;";
             Statement statement= connection.createStatement();
             ResultSet resultSet=statement.executeQuery(sql);
 

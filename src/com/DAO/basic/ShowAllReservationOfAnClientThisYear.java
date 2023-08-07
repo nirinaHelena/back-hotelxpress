@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisReservation;
@@ -21,7 +21,7 @@ public class ShowAllReservationOfAnClientThisYear {
                 String sql="SELECT count(reservation.*) " +
                         "AS total_of_reservation from reservation\n" +
                         "where id_user = " +idClient+
-                        "and EXTRACT(year from date_reservation) = "+year+";";
+                        " and EXTRACT(year from date_reservation) = "+year+";";
                 Statement statement=connection.createStatement();
                 ResultSet resultSet= statement.executeQuery(sql);
 

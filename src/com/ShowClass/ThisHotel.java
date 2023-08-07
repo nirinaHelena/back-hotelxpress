@@ -9,11 +9,12 @@ public class ThisHotel {
     private String phoneNumber;
 
     public ThisHotel(int id, String hotelName,
-                     String adress, String state,
+                     String adress, String city, String state,
                      String phoneNumber) {
         this.id = id;
         this.hotelName = hotelName;
         this.adress = adress;
+        this.city=city;
         this.state = state;
         this.phoneNumber = phoneNumber;
     }

@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.basic;
 
 import com.ConnectionToDB.DataBaseConnection;
 import com.ShowClass.ThisHotel;
@@ -12,14 +12,14 @@ import java.util.List;
 
 public class ShowAllHotelInGivenCity {
     public static List<ThisHotel>
-            showAllHotelInGivenCity(String city){
+            showAllHotelInGivenCity(String City){
         DataBaseConnection db=new DataBaseConnection();
         Connection connection= db.createConnection();
 
         List<ThisHotel> hotelList= new ArrayList<>();
 
         try {
-            String sql="select * from hotel where city = "+city+";";
+            String sql="select * from hotel where city = "+City+";";
             Statement statement= connection.createStatement();
             ResultSet resultSet=statement.executeQuery(sql);
 
@@ -27,11 +27,12 @@ public class ShowAllHotelInGivenCity {
                 int id= resultSet.getInt("id");
                 String hotelName= resultSet.getString("hotel_name");
                 String adress= resultSet.getString("adress");
+                String thisCity= resultSet.getString("city");
                 String state= resultSet.getString("state");
                 String phoneNumber= resultSet.getString("phone_number");
 
                 ThisHotel hotel=new ThisHotel(id,hotelName,adress,
-                        state,phoneNumber);
+                        thisCity,state,phoneNumber);
                 hotelList.add(hotel);
             }
             resultSet.close();
