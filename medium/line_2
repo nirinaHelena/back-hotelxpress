@@ -1,0 +1,32 @@
+public class ClientReservationCount {
+    public static void main(String[] args) {
+        DataBaseConnection db = new DataBaseConnection();
+        Connection connection = db.createConnection();
+
+        try {
+            String sql = "SELECT \"user\".id AS client_id, \"user\".first_name, \"user\".last_name, COUNT(reservation.id) AS reservation_count " +
+                    "FROM \"user\" " +
+                    "INNER JOIN reservation ON reservation.id_user = \"user\".id " +
+                    "WHERE \"user\".id_user_type = 1 AND \"user\".id = 10 " +
+                    "GROUP BY \"user\".id, \"user\".first_name, \"user\".last_name";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                int clientID = resultSet.getInt("client_id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                int reservationCount = resultSet.getInt("reservation_count");
+
+
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
