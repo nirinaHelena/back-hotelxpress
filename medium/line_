@@ -1,0 +1,33 @@
+public class FreeRoomsTomorrow {
+    public static void main(String[] args) {
+        DataBaseConnection db = new DataBaseConnection();
+        Connection connection = db.createConnection();
+
+        try {
+            String sql = "SELECT r.* FROM room AS r " +
+                    "WHERE r.id NOT IN ( " +
+                    "    SELECT rc.id_room " +
+                    "    FROM reservation_contain AS rc " +
+                    "    JOIN reservation AS res ON rc.id_reservation = res.id " +
+                    "    WHERE res.arrival <= CURRENT_DATE + 1 " +
+                    "    AND res.departure >= CURRENT_DATE + 1 " +
+                    ");";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                int roomId = resultSet.getInt("id");
+                String roomNumber = resultSet.getString("room_number");
+
+            }
+
+            resultSet.close();
+            statement.close();c
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
