@@ -1,0 +1,37 @@
+public class UnavailableRooms {
+    public static void main(String[] args) {
+        DataBaseConnection db = new DataBaseConnection();
+        Connection connection = db.createConnection();
+
+        try {
+            String sql = "SELECT room.id, room.room_name " +
+                    "FROM room " +
+                    "INNER JOIN reservation_contain " +
+                    "ON room.id = reservation_contain.id_room " +
+                    "INNER JOIN reservation " +
+                    "ON reservation_contain.id_reservation = reservation.id " +
+                    "WHERE NOW() BETWEEN reservation.arrival AND reservation.departure";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                int roomId = resultSet.getInt("id");
+                String roomName = resultSet.getString("room_name");
+
+                System.out.println("Room ID: " + roomId);
+                System.out.println("Room Name: " + roomName);
+                System.out.println("-----------------------");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
