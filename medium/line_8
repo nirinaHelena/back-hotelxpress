@@ -1,0 +1,31 @@
+  public class HotelRoomsCounts {
+        public static void main(String[] args) {
+            DataBaseConnection db = new DataBaseConnection();
+            Connection connection = db.createConnection();
+
+            try {
+                String sql = "SELECT hotel.id, hotel.hotel_name, COUNT(room.id) AS nombre_chambres " +
+                        "FROM hotel " +
+                        "LEFT JOIN room ON hotel.id = room.id_hotel " +
+                        "GROUP BY hotel.id, hotel.hotel_name";
+
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+
+                while (resultSet.next()) {
+                    int hotelId = resultSet.getInt("id");
+                    String hotelName = resultSet.getString("hotel_name");
+                    int numberOfRooms = resultSet.getInt("nombre_chambres");
+
+                }
+
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
